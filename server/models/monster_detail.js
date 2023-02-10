@@ -24,18 +24,36 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 references: {
                     model: {
-                        tableName: "Monster",
+                        tableName: "Monsters",
                     },
                     key: "id",
                     deferrable: Deferrable.INITIALLY_DEFERRED,
                 },
             },
-            elements: DataTypes.ARRAY(DataTypes.STRING),
-            ailemnts: DataTypes.ARRAY(DataTypes.STRING),
-            weakness: DataTypes.ARRAY(DataTypes.STRING),
+            elements: DataTypes.ARRAY(
+                DataTypes.ENUM(
+                    "Fire",
+                    "Water",
+                    "Thunder",
+                    "Ice",
+                    "Dragon",
+                    "None"
+                )
+            ),
+            ailments: DataTypes.ARRAY(DataTypes.STRING),
+            weakness: DataTypes.ARRAY(
+                DataTypes.ENUM(
+                    "Fire",
+                    "Water",
+                    "Thunder",
+                    "Ice",
+                    "Dragon",
+                    "None"
+                )
+            ),
             habitats: DataTypes.ARRAY(DataTypes.STRING),
-            size: DataTypes.ARRAY(DataTypes.INTEGER),
-            cousins: DataTypes.ARRAY(DataTypes.STRING),
+            size: DataTypes.ARRAY(DataTypes.FLOAT),
+            related_monsters: DataTypes.ARRAY(DataTypes.STRING),
         },
         {
             sequelize,

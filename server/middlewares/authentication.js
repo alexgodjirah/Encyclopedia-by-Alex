@@ -3,6 +3,7 @@ const { verifyToken } = require("../helpers/tokenHandler");
 
 const authentication = async (req, res, next) => {
     const { access_token } = req.cookies;
+
     try {
         if (access_token) {
             const decodedData = await verifyToken(access_token);

@@ -24,23 +24,15 @@ module.exports = {
             },
             physiology: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(2000),
             },
-            abilities: {
+            behavior_and_abilities: {
                 allowNull: false,
-                type: Sequelize.STRING,
-            },
-            behavior: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            habitat: {
-                allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(2000),
             },
             description: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.STRING(2000),
             },
             createdAt: {
                 allowNull: false,

@@ -8,21 +8,33 @@ class RegisterController {
             req.body;
 
         try {
+            if (
+                !username ||
+                !email ||
+                !password ||
+                !fullname ||
+                !birthdate ||
+                !region
+            ) {
+                return res
+                    .status(400)
+                    .json({ message: "Please fill the form" });
+            }
             // Username checker
-            const isUsernameAvailable = await User.findOne({
+            const isUsernameUnavailable = await User.findOne({
                 where: { username: username },
             });
-            if (isUsernameAvailable) {
+            if (isUsernameUnavailable) {
                 return res
                     .status(400)
                     .json({ message: "Username is already taken!" });
             }
 
             // Email checker
-            const isEmailAvailable = await User.findOne({
+            const isEmailUnavailable = await User.findOne({
                 where: { email: email },
             });
-            if (isEmailAvailable) {
+            if (isEmailUnavailable) {
                 return res
                     .status(400)
                     .json({ message: "Email is already taken!" });
@@ -68,6 +80,7 @@ class RegisterController {
                     id: createdUser.id,
                     username: createdUser.username,
                     email: createdUser.email,
+                    role: createdProfile.role,
                 };
 
                 const access_token = await generateToken(payload_access_token);
@@ -90,9 +103,7 @@ class RegisterController {
             });
         } catch (error) {
             console.error(error);
-            return res
-                .status(500)
-                .json({ message: `${error.message}. Please try again!` });
+            return res.status(500).json({ message: error.message });
         }
     }
 }

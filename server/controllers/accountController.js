@@ -23,9 +23,7 @@ class AccountController {
             return res.status(200).json(findAccount);
         } catch (error) {
             console.log(error);
-            return res
-                .status(500)
-                .json({ message: `${error.message}, Bad Request!` });
+            return res.status(500).json({ message: error.message });
         }
     }
 
@@ -40,6 +38,11 @@ class AccountController {
                     .json({ message: "ID is not found, please try again" });
             }
 
+            const findUser = await User.findOne({ where: { id: id } });
+            if (!findUser) {
+                return res.status(401).json({ message: "Unauthorized access" });
+            }
+
             const payload_user = {
                 username: username,
                 email: email,
@@ -48,7 +51,7 @@ class AccountController {
             };
 
             const updatedUser = await User.update(payload_user, {
-                where: { id: id },
+                where: { username: findUser.username },
             });
             if (!updatedUser) {
                 return res
@@ -58,10 +61,12 @@ class AccountController {
 
             // Generate Updated Access Token
             const payload_access_token = {
-                id: id,
+                id: findUser.id,
                 username: username,
                 email: email,
+                role: findUser.role,
             };
+
             const access_token = await generateToken(payload_access_token);
             if (!access_token) {
                 return res
@@ -73,14 +78,12 @@ class AccountController {
                 httpOnly: true,
             });
 
-            return res.status(200).json({
+            return res.status(201).json({
                 message: `Congratulation ${username}!! User's account is updated`,
             });
         } catch (error) {
             console.log(error);
-            return res
-                .status(500)
-                .json({ message: `${error.message}. Bad Request!` });
+            return res.status(500).json({ message: error.message });
         }
     }
 
@@ -103,9 +106,7 @@ class AccountController {
             });
         } catch (error) {
             console.error(error);
-            return res
-                .status(500)
-                .json({ message: `${error.message}, Bad Request!` });
+            return res.status(500).json({ message: error.message });
         }
     }
 }

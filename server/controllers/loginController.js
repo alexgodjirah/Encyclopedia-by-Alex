@@ -36,6 +36,7 @@ class LoginController {
                         id: findUser.id,
                         username: findUser.username,
                         email: findUser.email,
+                        role: findUser.role,
                     };
 
                     const access_token = await generateToken(
@@ -57,9 +58,7 @@ class LoginController {
                     });
                 } catch (error) {
                     console.error(error);
-                    return res
-                        .status(500)
-                        .json({ message: `${error.message}, Bad Request!` });
+                    return res.status(500).json({ message: error.message });
                 }
 
                 // Email User
@@ -111,16 +110,12 @@ class LoginController {
                     });
                 } catch (error) {
                     console.error(error);
-                    return res
-                        .status(500)
-                        .json({ message: `${error.message}, Bad Request!` });
+                    return res.status(500).json({ message: error.message });
                 }
             }
         } catch (error) {
             console.error(error);
-            return res
-                .status(500)
-                .json({ message: `${error.message}, Bad Request!` });
+            return res.status(500).json({ message: error.message });
         }
     }
 }

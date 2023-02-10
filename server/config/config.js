@@ -7,5 +7,8 @@ module.exports = {
         database: "encyclopedia_alex",
         host: "127.0.0.1",
         dialect: "postgres",
+        dialectOptions: {
+            client_encoding: "UTF8",
+        },
     },
 };

@@ -24,15 +24,33 @@ module.exports = {
             },
             elements: {
                 allowNull: false,
-                type: Sequelize.ARRAY(Sequelize.STRING),
+                type: Sequelize.ARRAY(
+                    Sequelize.ENUM(
+                        "Fire",
+                        "Water",
+                        "Thunder",
+                        "Ice",
+                        "Dragon",
+                        "None"
+                    )
+                ),
             },
-            ailemnts: {
+            ailments: {
                 allowNull: false,
                 type: Sequelize.ARRAY(Sequelize.STRING),
             },
             weakness: {
                 allowNull: false,
-                type: Sequelize.ARRAY(Sequelize.STRING),
+                type: Sequelize.ARRAY(
+                    Sequelize.ENUM(
+                        "Fire",
+                        "Water",
+                        "Thunder",
+                        "Ice",
+                        "Dragon",
+                        "None"
+                    )
+                ),
             },
             habitats: {
                 allowNull: false,
@@ -40,10 +58,9 @@ module.exports = {
             },
             size: {
                 allowNull: false,
-                type: Sequelize.ARRAY(Sequelize.INTEGER),
+                type: Sequelize.ARRAY(Sequelize.FLOAT),
             },
-            cousins: {
-                allowNull: false,
+            related_monsters: {
                 type: Sequelize.ARRAY(Sequelize.STRING),
             },
             createdAt: {
